@@ -6,6 +6,15 @@ const AutoLoad = require('fastify-autoload')
 module.exports = function (fastify, opts, next) {
   // Place here your custom code!
 
+  fastify.decorate('notFound', (req, reply) => {
+    reply.code(404).send({
+      message: 'This is just proxy for Solat Jakim API (Unofficial) - https://api.azanpro.com/reference/times/today'
+    })
+  })
+  fastify.setNotFoundHandler(
+    {},
+    fastify.notFound
+  )
   // Do not touch the following lines
 
   // This loads all plugins defined in plugins

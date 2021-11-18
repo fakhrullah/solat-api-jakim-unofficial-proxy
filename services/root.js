@@ -2,6 +2,9 @@
 
 const got = require('got')
 const queryString = require('querystring')
+const gotOptions = {
+  rejectUnauthorized: false
+};
 
 module.exports = function (fastify, opts, next) {
   fastify.get('/', function (request, reply) {
@@ -14,7 +17,7 @@ module.exports = function (fastify, opts, next) {
     const {time} = request.params
     const queryBuilder = queryString.encode(request.query)
     try {
-        const response = await got(`https://api.azanpro.com/times/${time}?${queryBuilder}`)
+        const response = await got(`https://api.azanpro.com/times/${time}?${queryBuilder}`, gotOptions)
         console.log(response.body)
         return JSON.parse(response.body)
     } catch (error) {
@@ -30,7 +33,7 @@ module.exports = function (fastify, opts, next) {
       return fastify.notFound(request, reply)
     }
     try {
-        const response = await got(`https://api.azanpro.com/zone/${zoneVars}?${queryBuilder}`)
+        const response = await got(`https://api.azanpro.com/zone/${zoneVars}?${queryBuilder}`, gotOptions)
         console.log(response.body)
         return JSON.parse(response.body)
     } catch (error) {
